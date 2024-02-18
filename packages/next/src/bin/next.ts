@@ -175,7 +175,7 @@ program
 
 program
   .command('export', { hidden: true })
-  .action(import('../cli/next-export').then(nextExport))
+  .action(import('../cli/next-export').then((mod) => mod.nextExport()))
   .helpOption(false)
 
 program
