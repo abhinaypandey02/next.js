@@ -119,7 +119,7 @@ program
   .action((directory, options) =>
     // ensure process exits after build completes so open handles/connections
     // don't cause process to hang
-    import('../cli/next-build').then((mod) =>
+    import('../cli/next-build.js').then((mod) =>
       mod.nextBuild(options, directory).then(() => process.exit(0))
     )
   )
@@ -169,13 +169,13 @@ program
   )
   .addOption(new Option('--experimental-test-proxy').hideHelp())
   .action((directory, options) =>
-    import('../cli/next-dev').then((mod) => mod.nextDev(options, directory))
+    import('../cli/next-dev.js').then((mod) => mod.nextDev(options, directory))
   )
   .usage('[directory] [options]')
 
 program
   .command('export', { hidden: true })
-  .action(import('../cli/next-export').then((mod) => mod.nextExport()))
+  .action(() => import('../cli/next-export.js').then((mod) => mod.nextExport()))
   .helpOption(false)
 
 program
@@ -189,7 +189,7 @@ program
   )
   .option('--verbose', 'Collects additional information for debugging.')
   .action((options) =>
-    import('../cli/next-info').then((mod) => mod.nextInfo(options))
+    import('../cli/next-info.js').then((mod) => mod.nextInfo(options))
   )
 
 program
@@ -269,7 +269,9 @@ program
     'Reports errors when any file patterns are unmatched.'
   )
   .action((directory, options) =>
-    import('../cli/next-lint').then((mod) => mod.nextLint(options, directory))
+    import('../cli/next-lint.js').then((mod) =>
+      mod.nextLint(options, directory)
+    )
   )
   .usage('[directory] [options]')
 
@@ -305,7 +307,9 @@ program
   )
   .addOption(new Option('--experimental-test-proxy').hideHelp())
   .action((directory, options) =>
-    import('../cli/next-start').then((mod) => mod.nextStart(options, directory))
+    import('../cli/next-start.js').then((mod) =>
+      mod.nextStart(options, directory)
+    )
   )
   .usage('[directory] [options]')
 
@@ -325,7 +329,7 @@ program
   )
   .option('--disable', `Disables Next.js' telemetry collection.`)
   .action((toggle, options) => {
-    import('../cli/next-telemetry').then((mod) =>
+    import('../cli/next-telemetry.js').then((mod) =>
       mod.nextTelemetry(options, toggle)
     )
   })
