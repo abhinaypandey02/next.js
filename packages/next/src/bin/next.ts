@@ -207,7 +207,7 @@ program
     '-d, --dir, <dirs...>',
     'Include directory, or directories, to run ESLint.'
   )
-  .option('-f, --file, <files...>', 'Include file, or files, to run ESLint.')
+  .option('--file, <files...>', 'Include file, or files, to run ESLint.')
   .addOption(
     new Option(
       '--ext, [exts...]',
@@ -247,7 +247,7 @@ program
       .default(-1)
   )
   .option('--output-file, <outputFile>', 'Specify a file to write report to.')
-  .option('--format, <format>', 'Uses a specific output format.')
+  .option('-f, --format, <format>', 'Uses a specific output format.')
   .option(
     '--no-inline-config',
     'Prevents comments from changing config or rules.'
