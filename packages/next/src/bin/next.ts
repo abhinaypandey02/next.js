@@ -119,9 +119,9 @@ program
   .action((directory, options) =>
     // ensure process exits after build completes so open handles/connections
     // don't cause process to hang
-    import('../cli/next-build.js').then((mod) =>
-      mod.nextBuild(options, directory).then(() => process.exit(0))
-    )
+    Promise.resolve(
+      require('../cli/next-build').nextBuild(options, directory)
+    ).then(process.exit(0))
   )
   .usage('[directory] [options]')
 
@@ -169,13 +169,13 @@ program
   )
   .addOption(new Option('--experimental-test-proxy').hideHelp())
   .action((directory, options) =>
-    import('../cli/next-dev.js').then((mod) => mod.nextDev(options, directory))
+    Promise.resolve(require('../cli/next-dev').nextDev(options, directory))
   )
   .usage('[directory] [options]')
 
 program
   .command('export', { hidden: true })
-  .action(() => import('../cli/next-export.js').then((mod) => mod.nextExport()))
+  .action(() => Promise.resolve(require('../cli/next-export').nextExport()))
   .helpOption(false)
 
 program
@@ -189,7 +189,7 @@ program
   )
   .option('--verbose', 'Collects additional information for debugging.')
   .action((options) =>
-    import('../cli/next-info.js').then((mod) => mod.nextInfo(options))
+    Promise.resolve(require('../cli/next-info').nextInfo(options))
   )
 
 program
@@ -269,9 +269,7 @@ program
     'Reports errors when any file patterns are unmatched.'
   )
   .action((directory, options) =>
-    import('../cli/next-lint.js').then((mod) =>
-      mod.nextLint(options, directory)
-    )
+    Promise.resolve(require('../cli/next-lint').nextLint(options, directory))
   )
   .usage('[directory] [options]')
 
@@ -307,9 +305,7 @@ program
   )
   .addOption(new Option('--experimental-test-proxy').hideHelp())
   .action((directory, options) =>
-    import('../cli/next-start.js').then((mod) =>
-      mod.nextStart(options, directory)
-    )
+    Promise.resolve(require('../cli/next-start').nextStart(options, directory))
   )
   .usage('[directory] [options]')
 
@@ -328,11 +324,11 @@ program
     )
   )
   .option('--disable', `Disables Next.js' telemetry collection.`)
-  .action((toggle, options) => {
-    import('../cli/next-telemetry.js').then((mod) =>
-      mod.nextTelemetry(options, toggle)
+  .action((toggle, options) =>
+    Promise.resolve(
+      require('../cli/next-telemetry').nextTelemetry(options, toggle)
     )
-  })
+  )
   .usage('[toggle] [options]')
 
 program.parse(process.argv)
