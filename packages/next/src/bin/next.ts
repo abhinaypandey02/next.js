@@ -120,8 +120,10 @@ program
     // ensure process exits after build completes so open handles/connections
     // don't cause process to hang
     Promise.resolve(
-      require('../cli/next-build').nextBuild(options, directory)
-    ).then(process.exit(0))
+      require('../cli/next-build')
+        .nextBuild(options, directory)
+        .then(process.exit(0))
+    )
   )
   .usage('[directory] [options]')
 
