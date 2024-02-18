@@ -126,7 +126,7 @@ program
   .action((directory, options) =>
     // ensure process exits after build completes so open handles/connections
     // don't cause process to hang
-    nextBuild(options, directory).then(process.exit(0))
+    nextBuild(options, directory).then(() => process.exit(0))
   )
   .usage('[directory] [options]')
 
